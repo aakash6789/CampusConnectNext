@@ -47,7 +47,7 @@ export default function SignupPage(){
         <label htmlFor="password" className="my-2">password</label>
                  <input id="password" type="password" className="text-black p-2 border rounded-lg mb:4 border-gray-300 focus:outline-none focus:border-gray-600 " onChange={(e)=>setUser({...user,password:e.target.value})}/>
                  <button className="mt-[3%]"   onClick={ register}>{buttonDisabled?"Enter details":"Signup"}</button>
-                 <Link href="/login" className="mt-4">Visit login page</Link>
+                 <p className="mt-[3%]">Have a account<Link href="/login" className=" underline mx-1 ">login</Link>instead?</p>
         </div>
     );
 }
