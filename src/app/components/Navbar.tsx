@@ -3,6 +3,7 @@ import { useState ,useEffect} from 'react';
 import React from "react";
 import applogo from '../assets/campuslogo3.jpg'
 import Image from "next/image";
+import Link from 'next/link';
 const Navbar = () => {
   const [isClient,setIsClient]=useState(false);
     const date = new Date();
@@ -22,7 +23,7 @@ const Navbar = () => {
   return (
     
       <nav className='relative flex h-[10.1vh] bg-blue-200'>
-       <Image src={applogo} className='md:w-[5%] max-sm:w-[15%] sm:w-[8%] ml-[5%] ' alt="logo"></Image>
+       <Link href='/'><Image src={applogo} className='md:w-[5%] absolute max-sm:w-[15%] sm:w-[8%] ml-[5%] ' alt="logo"></Image></Link>
         <div className='flex  justify-between md:px-8 md:w-2/4 absolute right-[5%] mt-6 lg:text-[2vh] md:text-[1.5vh] sm:text-[1vh] pt-2  max-sm:text-[1vh] font-semibold '>
        {isClient && <div className='flex py-1 '>
         <div className=" mr-[5px]">
@@ -40,7 +41,7 @@ const Navbar = () => {
         </div>}
         <span className='mx-2 py-1'>About us</span>
         <span className='mx-2 py-1'>Contact us</span>
-        <button className='text-white bg-blue-700 rounded-lg sm:px-6 max-sm:px-2 p-1'>Sign in</button>
+        <Link href='/signup'><button className='text-white bg-blue-700 rounded-lg sm:px-6 max-sm:px-2 p-1'>Sign in</button></Link>
         </div>  
       </nav>
   )

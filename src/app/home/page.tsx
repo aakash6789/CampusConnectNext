@@ -56,7 +56,7 @@ return (
         </div>
       </div>
       <h2 className='mt-[5vh] px-[10%] text-center text-[2.5vh] max-sm:text-[2vh] font-semibold'>{phead[currindex]}</h2>
-      <p className=' px-[10%] text-center text-[2.5vh] max-sm:text-[2vh]'>{ptext[currindex]}</p>
+      <p className=' px-[10%] text-center text-[2.5vh] mt-[5%] max-sm:text-[2vh]'>{ptext[currindex]}</p>
     
     </div> 
 )
