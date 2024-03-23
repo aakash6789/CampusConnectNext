@@ -6,11 +6,16 @@ import axios from "axios";
 import toast from "react-hot-toast";
 export default function LoginPage() {
     const router=useRouter();
-    const [loading,setLoading]=useState(false);
-    const [user,setUser]=useState({
+    const [loading,setLoading]=useState<boolean>(false);
+    interface User{
+        email:string;
+        password:string
+    }
+    const initialState:User={
         email:"",
-        password:"",
-       });
+        password:""
+    }
+    const [user,setUser]=useState<User>(initialState);
        const onlogin=async ()=>{
         try {
             setLoading(true);
