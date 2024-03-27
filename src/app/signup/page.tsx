@@ -1,11 +1,13 @@
 "use client";
 import Link from "next/link";
-import React ,{useEffect, useState} from "react";
+import React ,{useEffect, useState,useCallback,createRef} from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import toast from "react-hot-toast";
-import {useDropzone} from 'react-dropzone';
+import Dropzone from 'react-dropzone';
+import Image from "next/image";
 export default function SignupPage(){
+    const dropzoneRef = createRef();
     const router=useRouter();
     interface User{
         username:string;
@@ -18,6 +20,7 @@ export default function SignupPage(){
         password:""
     }
     const [user,setUser]=useState<User>(initialState);
+    const [paths, setPaths] = useState<any>([]);
    const [buttonDisabled,setButtonDisabled]=useState<boolean>(false);
    const [loading,setLoading]=useState<boolean>(false);
    const register=async ()=>{
@@ -54,11 +57,36 @@ export default function SignupPage(){
         <label htmlFor="password" className="my-2">password</label>
                  <input id="password" type="password" className="text-black p-2 border rounded-lg mb:4 border-gray-300 focus:outline-none focus:border-gray-600 " onChange={(e)=>setUser({...user,password:e.target.value})}/>
                  <label className="mt-4">Choose profile picture</label>
-                 <input type="file" className="ml-[15%]"></input>
+                 <Dropzone onDrop={useCallback((acceptedFiles) => {
+                    console.log(acceptedFiles);
+                    setPaths(acceptedFiles.map(file => URL.createObjectURL(file)));
+                    },[paths])} ref={dropzoneRef}>
+  {({getRootProps, getInputProps}) => (
+    <section>
+      <div {...getRootProps()}>
+        <input type="file" alt="Profile picture" name="" {...getInputProps()} ></input>
+       {paths && <button >Select</button>}
+       
+      </div>
+    </section>
+  )}
+</Dropzone>
+
+{paths && paths.map(path => (
+    <Image key={path} src={path} alt='image' width={20} height={20}></Image>
+))}
+
+                 {/* <input type="file" className="ml-[15%]"></input> */}
                  <button className="mt-[3%]"   onClick={ register}>{buttonDisabled?"Enter details":"Signup"}</button>
                  <p className="mt-[3%]">Have a account<Link href="/login" className=" underline mx-1 ">login</Link>instead?</p>
         </div>
     );
 }
+
+
+
+
+
+
 
 
