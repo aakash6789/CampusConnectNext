@@ -12,24 +12,28 @@ export default function SignupPage(){
     interface User{
         username:string;
         email:string;
-        password:string
+        password:string;
+        image:File |null;
     }
     const initialState:User={
         username:"",
         email:"",
-        password:""
+        password:"",
+        image:null
     }
     const [user,setUser]=useState<User>(initialState);
     const [paths, setPaths] = useState<any>([]);
    const [buttonDisabled,setButtonDisabled]=useState<boolean>(false);
    const [loading,setLoading]=useState<boolean>(false);
+   const[selectedFile,setSelectedFile]=useState<File>();
    const register=async ()=>{
     try {
         setLoading(true);
+        setUser({...user,image:selectedFile!});   
         const response=await axios.post("/api/users/signup",user);
         console.log(response.data);
         toast.success("Registration sucessfull")
-        router.push("/login");
+        // router.push("/login");
     } catch (error) {
         console.log("Signup failed",error);
     }
@@ -59,12 +63,20 @@ export default function SignupPage(){
                  <label className="mt-4">Choose profile picture</label>
                  <Dropzone onDrop={useCallback((acceptedFiles) => {
                     console.log(acceptedFiles);
+                    console.log(typeof(acceptedFiles));
                     setPaths(acceptedFiles.map(file => URL.createObjectURL(file)));
+                    setUser({...user,image:acceptedFiles[0].path});    
                     },[paths])} ref={dropzoneRef}>
   {({getRootProps, getInputProps}) => (
     <section>
       <div {...getRootProps()}>
-        <input type="file" alt="Profile picture" name="" {...getInputProps()} ></input>
+        <input type="file" alt="Profile picture" name="profile_picture" onChange={({target})=>{
+            if(target.files){
+                const file=target.files[0];
+                setPaths(URL.createObjectURL(file));
+                setSelectedFile(file);
+            }
+        }} {...getInputProps()} ></input>
        {paths && <button >Select</button>}
        
       </div>
